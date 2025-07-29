@@ -179,12 +179,15 @@ export default function ({ config }: { config: z.infer<typeof configSchema> }) {
 
         const data = response.data;
         
+        // Debug: API response'unu log et
+        console.log("API Response:", JSON.stringify(data, null, 2));
+        
         if (!data.success) {
           return {
             content: [
               {
                 type: "text",
-                text: "❌ Hata: İşbirlikçi bilgileri alınamadı"
+                text: `❌ Hata: İşbirlikçi bilgileri alınamadı. API Response: ${JSON.stringify(data)}`
               }
             ]
           };
@@ -192,6 +195,17 @@ export default function ({ config }: { config: z.infer<typeof configSchema> }) {
 
         const profile = data.profile;
         const collaborators = data.collaborators || [];
+
+        if (!profile) {
+          return {
+            content: [
+              {
+                type: "text",
+                text: "❌ Hata: Profil bilgileri alınamadı. API response'unda profile objesi bulunamadı."
+              }
+            ]
+          };
+        }
 
         let result = "🤝 Akademik İşbirlikçi Analizi\n\n";
         result += `Ana Profil: ${profile.name} (ID: ${profile.id})\n`;
