@@ -5,7 +5,7 @@ import axios from "axios";
 // Configuration schema for the YOK Akademik MCP server
 export const configSchema = z.object({
   baseUrl: z.string().default("http://91.99.144.40:3002").describe("Base URL for YOK Akademik API"),
-  timeout: z.number().default(30000).describe("Request timeout in milliseconds")
+  timeout: z.number().default(120000).describe("Request timeout in milliseconds (3 minutes)")
 });
 
 // Types for API responses
